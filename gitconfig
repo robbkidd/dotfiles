@@ -21,7 +21,14 @@
 [push]
   default = tracking
 [alias]
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  # Inspiration: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
+  la = "!git config -l | grep alias | cut -c 7-"
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(green)%d%Creset %s %C(yellow)(%ad) %C(blue)[%an]%Creset' --abbrev-commit --date=relative
+  ll = log --pretty=format:'%C(red)%h%Cgreen%d %Creset%s %C(yellow)(%ad) %C(blue)[%cn]' --decorate --numstat --date=relative
+  filelog = log -u
+  fl = log -u
+  f = "!git ls-files | grep -i"
+  gr = grep -nIi
   st = status -sb
   deliver = merge --no-ff
   puff = pull -ff --ff-only
