@@ -23,6 +23,7 @@
 [alias]
   # Inspiration: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   la = "!git config -l | grep alias | cut -c 7-"
+  aging = "!git branch -a | grep -v HEAD | sed s/^..// | while read branch; do echo `git log -1 --pretty=format:'%Creset%ai %C(red)%h %C(yellow)%ar %C(blue)[%cn] %C(green)' $branch` $branch ; done | sort"
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(green)%d%Creset %s %C(yellow)(%ad) %C(blue)[%an]%Creset' --abbrev-commit --date=relative
   ll = log --pretty=format:'%C(red)%h%Cgreen%d %Creset%s %C(yellow)(%ad) %C(blue)[%cn]' --decorate --numstat --date=relative
   filelog = log -u
