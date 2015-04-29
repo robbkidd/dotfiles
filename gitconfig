@@ -20,7 +20,16 @@
 
 [push]
   default = tracking
+[pull]
+  ff = only
 [alias]
+  cb = "!git status | grep '^On branch' | sed -e 's/^On branch //'"
+  down = pull --prune
+  onup = "!git push -u origin `git cb`"
+  deliver = merge --no-ff
+  sweepbranches="!git branch --merged | grep --invert-match `git rev-parse --abbrev-ref HEAD` | xargs -n 1 git branch --delete"
+  gui = !sh -c '/usr/local/git/libexec/git-core/git-gui'
+  home = rev-parse --show-toplevel
   # Inspiration: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   la = "!git config -l | grep alias | cut -c 7-"
   aging = "!git branch -a | grep -v HEAD | sed s/^..// | while read branch; do echo `git log -1 --pretty=format:'%Creset%ai %C(red)%h %C(yellow)%ar %C(blue)[%cn] %C(green)' $branch` $branch ; done | sort"
@@ -31,6 +40,3 @@
   f = "!git ls-files | grep -i"
   gr = grep -nIi
   st = status -sb
-  deliver = merge --no-ff
-  puff = pull -ff --ff-only
-
