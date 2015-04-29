@@ -30,6 +30,7 @@
   sweepbranches="!git branch --merged | grep --invert-match `git rev-parse --abbrev-ref HEAD` | xargs -n 1 git branch --delete"
   gui = !sh -c '/usr/local/git/libexec/git-core/git-gui'
   home = rev-parse --show-toplevel
+  author = "!git --no-pager log -1 --pretty=format:%ae%n"
   # Inspiration: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   la = "!git config -l | grep alias | cut -c 7-"
   aging = "!git branch -a | grep -v HEAD | sed s/^..// | while read branch; do echo `git log -1 --pretty=format:'%Creset%ai %C(red)%h %C(yellow)%ar %C(blue)[%cn] %C(green)' $branch` $branch ; done | sort"
