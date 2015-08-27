@@ -23,7 +23,7 @@
 [pull]
   ff = only
 [alias]
-  cb = "!git status | grep '^On branch' | sed -e 's/^On branch //'"
+  cb = rev-parse --abbrev-ref HEAD
   down = pull --prune
   onup = "!git push -u origin `git cb`"
   deliver = merge --no-ff
