@@ -17,6 +17,8 @@
   whitespace = red reverse
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = /Users/rkidd/.gitignore_global
+	editor = /usr/bin/vim
 
 [push]
   default = tracking
@@ -24,7 +26,7 @@
   ff = only
 [alias]
   cb = rev-parse --abbrev-ref HEAD
-  down = pull --prune
+  down = pull --ff-only --prune
   onup = "!git push -u origin `git cb`"
   deliver = merge --no-ff
   sweepbranches="!git branch --merged | grep --invert-match `git rev-parse --abbrev-ref HEAD` | xargs -n 1 git branch --delete"
@@ -32,7 +34,7 @@
   home = rev-parse --show-toplevel
   author = "!git --no-pager log -1 --pretty=format:%ae%n"
   # Nice branch aging from https://gist.github.com/ultrasaurus/ce31548b1bf32fd73340
-  aging = for-each-ref --sort='-authordate:iso8601' --format=' %(color:yellow)%(authordate:relative)%09%(color:blue)[%(authorname)] %(color:green)%(refname:short)' refs/
+  aging = for-each-ref --sort='-authordate:iso8601' --format=' %(color:yellow)%(authordate:relative)%09%(color:blue)[%(authorname)] %(color:green)%(refname:short)' +refs/heads/*:refs/remotes/origin/*
   # Inspiration: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   la = "!git config -l | grep alias | cut -c 7-"
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(green)%d%Creset %s %C(yellow)(%ad) %C(blue)[%an]%Creset' --abbrev-commit --date=relative
@@ -42,3 +44,4 @@
   f = "!git ls-files | grep -i"
   gr = grep -nIi
   st = status -sb
+  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(cyan)(%an)%Creset' --date=relative

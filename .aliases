@@ -1,0 +1,23 @@
+alias rly="sudo !!"
+
+alias sha256sum="shasum -a256"
+
+grin() { grep -r -i $1 -n $2 }
+alias rack="ack --ruby"
+
+alias fixdns="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist"
+alias fixcamera="sudo killall VDCAssistant"
+
+function upgradecasks() { for cask in `brew cask list`; do brew cask install $cask; done }
+function brewyolo() { brew update; brew upgrade --all; upgradecasks }
+
+alias git=hub
+
+# Bundler
+alias b="bundle"
+alias bi="b install"
+alias biv="b install --path vendor"
+alias bil="bi --local"
+alias bu="b update"
+alias be="b exec"
+alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
