@@ -13,6 +13,16 @@ else
     sh tmp_install_ohmyzsh.sh --unattended
 fi
 
+zsh_syntax_highlighting_location=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+if [ -d "${zsh_syntax_highlighting_location}" ]; then
+    echo "\n zsh syntax highlighting plugin already present. Skipping clone. Does it need updating?"
+else
+    git clone --depth=1 \
+        https://github.com/zsh-users/zsh-syntax-highlighting.git \
+        "${zsh_syntax_highlighting_location}"
+    echo "\n Update ~/.zshrc with 'plugins=(... zsh-syntax-highlighting)' to enable it."
+fi
+
 ### Powerlevel 10k ###
 
 # retrieve powerlevel10k https://github.com/romkatv/powerlevel10k
