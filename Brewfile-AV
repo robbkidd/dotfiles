@@ -1,0 +1,15 @@
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core"
+
+# A/V club
+brew "exiftool"
+brew "ffmpeg"
+brew "handbrake"
+brew "imagemagick"
+brew "mkvtoolnix"
+brew "vlc"
+brew "yt-dlp"
+cask "avidemux"
+cask "gimp"
+cask "spotify"

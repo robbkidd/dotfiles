@@ -1,0 +1,7 @@
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core"
+
+# Flash some phones, copy some files
+cask "android-file-transfer"
+cask "android-platform-tools"

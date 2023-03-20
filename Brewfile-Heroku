@@ -1,0 +1,7 @@
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core"
+
+# Heroku management
+tap "heroku/brew"
+brew "heroku/brew/heroku"

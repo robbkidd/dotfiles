@@ -1,0 +1,8 @@
+# Dev
+brew "asdf"
+brew "direnv"
+brew "remake"
+brew "gh"
+brew "graphviz"
+brew "httpie"
+cask "visual-studio-code"
