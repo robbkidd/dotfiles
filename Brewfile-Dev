@@ -1,8 +1,23 @@
 # Dev
+brew "act"
 brew "asdf"
+brew "awscli"
 brew "direnv"
 brew "remake"
 brew "gh"
+brew "git-gui"
 brew "graphviz"
 brew "httpie"
+brew "llvm"
+brew "node"
+brew "tilt"
+cask "docker"
 cask "visual-studio-code"
+
+# Some Python-on-macOS deps
+brew "openssl"
+brew "readline"
+brew "sqlite3"
+brew "tcl-tk"
+brew "xz"
+brew "zlib"
