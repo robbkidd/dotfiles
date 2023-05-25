@@ -17,8 +17,8 @@
   whitespace = red reverse
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = /Users/rkidd/.gitignore_global
-	editor = /usr/bin/vim
+  excludesFile = ~/.gitignore_global
+  editor = /usr/bin/vim
 
 [push]
   default = tracking
