@@ -40,3 +40,9 @@ if command -v kubectl &> /dev/null; then
   alias k="kubectl"
   compdef k="kubectl"
 fi
+
+## Audit Electron apps
+audit-electrons() {
+  find /Applications -type f -name "*Electron Framework*" -exec \
+    sh -c "echo  \"{}\" && strings \"{}\" | grep '^Chrome/[0-9.]* Electron/[0-9]' | head -n1 && echo " \;
+}
