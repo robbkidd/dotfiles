@@ -12,3 +12,13 @@ function upgradecasks() { for cask in `brew cask list`; do brew cask install $ca
 function brewyolo() { brew update; brew upgrade --all; upgradecasks }
 
 alias git=hub
+
+who-is-listening() {
+    if [ $# -eq 0 ]; then
+        sudo lsof -iTCP -sTCP:LISTEN -n -P
+    elif [ $# -eq 1 ]; then
+        sudo lsof -iTCP -sTCP:LISTEN -n -P | grep -i --color $1
+    else
+        echo "Usage: who-is-listening [pattern]"
+    fi
+}
