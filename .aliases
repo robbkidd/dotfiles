@@ -22,3 +22,21 @@ who-is-listening() {
         echo "Usage: who-is-listening [pattern]"
     fi
 }
+
+## direnv
+if command -v direnv &> /dev/null; then
+  alias dea="direnv allow"
+  alias der="direnv reload"
+fi
+
+## remake
+if command -v remake &> /dev/null; then
+  compdef remake="make"
+fi
+
+## kubectl
+if command -v kubectl &> /dev/null; then
+  source <(kubectl completion zsh)
+  alias k="kubectl"
+  compdef k="kubectl"
+fi
