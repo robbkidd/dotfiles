@@ -31,44 +31,79 @@ M.license = "MIT - https://opensource.org/licenses/MIT"
 
 local logger = hs.logger.new('MeetingDetector')
 local watchablePath = M.name
+
+local zoomAppWatcher = nil
 local meetingNotifier = nil
-local meetingInProgressWatcher = nil
+local meetingPoller = nil
 local meetingInProgress = false
 
-local function meetingInProgressCallback()
-	local meetingInProgressNow = false
-	local zoom = hs.application.find("zoom.us")
+local function meetingInProgressCheck(zoomApp)
+	local meetingInProgressNow = false -- assume we're not in a meeting
+
+	local zoom = zoomApp or hs.application.find("zoom.us")
 	if zoom then
-		logger.i("Zoom found")
-		local zoomWindows = zoom:allWindows()
-		for i, window in ipairs(zoomWindows) do
-			if window:title() == "Zoom Meeting" then
-				meetingInProgressNow = true
-				break
-			end
+		logger.d("Zoom found")
+		local zoomMenus = zoom:getMenuItems()
+		-- if the second Zoom menu item is "Meeting", you're in a meeting
+		if zoomMenus and zoomMenus[2]["AXTitle"] == "Meeting" then
+			meetingInProgressNow = true
 		end
+	else
+		logger.d("Zoom not found, why am I even checking?")
 	end
-	if meetingInProgressNow ~= meetingInProgress then
+
+	if meetingInProgressNow ~= meetingInProgress then -- there's been a state change
 		meetingInProgress = meetingInProgressNow
 		if meetingInProgress then
-			logger.i("Meeting in progress")
+			logger.i("📢: meeting in progress")
 			meetingNotifier["meeting_in_progress"] = meetingInProgress
 		else
-			logger.i("Meeting ended")
+			logger.i("📢: meeting ended")
 			meetingNotifier["meeting_in_progress"] = meetingInProgress
 		end
 	end
 end
 
-function M:start()
-	logger.i("Starting")
+local appEventTypes = {
+	[hs.application.watcher.activated] = "got focus",
+	[hs.application.watcher.deactivated] = "lost focus",
+	[hs.application.watcher.hidden] = "hidden",
+	[hs.application.watcher.launched] = "launched",
+	[hs.application.watcher.launching] = "launching",
+	[hs.application.watcher.terminated] = "terminated",
+	[hs.application.watcher.unhidden] = "unhidden",
+}
+
+local function zoomAppEventHandler(appName, eventType, appObject)
+	if (appName == "zoom.us") then
+		logger.d("Zoom app " .. appEventTypes[eventType])
+		if eventType == hs.application.watcher.terminated then
+			-- if Zoom has been closed, stop polling for meeting state
+			meetingPoller:stop()
+		else
+			-- it's an app event that means Zoom is running, so poll for meeting state
+			if not meetingPoller:running() then meetingPoller:start() end
+		end
+
+		meetingInProgressCheck(appObject)
+	end
+end
+
+function M:init()
 	meetingNotifier = hs.watchable.new(watchablePath)
-	meetingInProgressWatcher = hs.timer.doEvery(5, meetingInProgressCallback)
+	meetingPoller = hs.timer.new(30, meetingInProgressCheck) -- to be started by zoomAppWatcher
+	zoomAppWatcher = hs.application.watcher.new(zoomAppEventHandler)
+end
+
+function M:start(checkInterval)
+	logger.i("Starting")
+	zoomAppWatcher:start()
 end
 
 function M:stop()
 	logger.i("Stopping")
-	meetingInProgressWatcher:stop()
+	zoomAppWatcher:stop()
+	meetingPoller:stop()
 end
 
 return M
