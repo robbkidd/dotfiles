@@ -77,18 +77,18 @@ end
 
 local function menuItems()
 	return {
-		{ title = "on",      fn = turnOn	},
-		{ title = "off",     fn = turnOff	},
-		{	title = "---"	},
+		{ title = "on",      fn = turnOn },
+		{ title = "off",     fn = turnOff },
+		{ title = "---" },
 		{ title = "glow",    fn = function() litraDo("glow")    end, tooltip = "~10%" },
-		{	title = "dim",     fn = function() litraDo("dim")	    end, tooltip = "~20%" },
-		{	title = "normal",	 fn = function() litraDo("normal")  end, tooltip = "~40%" },
+		{ title = "dim",     fn = function() litraDo("dim")     end, tooltip = "~20%" },
+		{ title = "normal",  fn = function() litraDo("normal")  end, tooltip = "~40%" },
 		{ title = "medium",  fn = function() litraDo("medium")  end, tooltip = "~50%" },
-		{ title = "bright",	 fn = function() litraDo("bright")  end, tooltip = "~90%" },
-		{ title = "---"	},
-		{	title = "warmest", fn = function() litraDo("warmest")	end, tooltip = "2700K" },
-		{	title = "warm",	   fn = function() litraDo("warm")    end, tooltip = "3200K" },
-		{	title = "coldest", fn = function() litraDo("coldest") end, tooltip = "6500K" }
+		{ title = "bright",  fn = function() litraDo("bright")  end, tooltip = "~90%" },
+		{ title = "---" },
+		{ title = "warmest", fn = function() litraDo("warmest") end, tooltip = "2700K" },
+		{ title = "warm",    fn = function() litraDo("warm")    end, tooltip = "3200K" },
+		{ title = "coldest", fn = function() litraDo("coldest") end, tooltip = "6500K" }
 	}
 end
 
