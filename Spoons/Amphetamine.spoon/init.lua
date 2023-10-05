@@ -38,7 +38,7 @@ e.2......6.3..........t..q....
 
 
 local function setIcon(state)
-  M.menu:setIcon(state and ampOnIcon or ampOffIcon)
+	M.menu:setIcon(state and ampOnIcon or ampOffIcon)
 end
 
 function M:init()
